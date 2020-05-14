@@ -5,10 +5,11 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CategoryAswer {
+public class CategoryAswer  {
     private Context context;
     private static Map<String, String> questionAnswer = new HashMap<>();
     /*

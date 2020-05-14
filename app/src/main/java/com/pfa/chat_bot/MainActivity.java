@@ -2,6 +2,9 @@ package com.pfa.chat_bot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +21,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private EditText Message_Et;
     private ImageButton Send_btn;
-    private ListView Messages_lv;
+    public static ListView Messages_lv;
     private ConversationAdapter Adapter;
     private ArrayList<Message> message;
     private boolean sender = true;
     private ChatBot chatBot ;
+    private ProgressDialog mProgressBar = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         message = new ArrayList<>();
         Adapter = new ConversationAdapter(MainActivity.this,message);
         Messages_lv.setAdapter(Adapter);
-
-        chatBot = new ChatBot(MainActivity.this);
-
         Send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
                     Adapter.notifyDataSetChanged();
                     Messages_lv.smoothScrollToPosition(Adapter.getCount()-1);
                 }else{
-
-                    Toast.makeText(MainActivity.this,"Not Trained",Toast.LENGTH_SHORT).show();
+                    if (!chatBot.isTrained()) Toast.makeText(MainActivity.this,"Wait a minute, I'm not loaded yet",Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(MainActivity.this,"I'm waiting for your questions",Toast.LENGTH_SHORT).show();
                 }
                 }else{
 
-                     Toast.makeText(MainActivity.this,"ChatBot not created",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(MainActivity.this,"Wait a minute, I'm not loaded yet",Toast.LENGTH_LONG).show();
                  }
             }
         });
@@ -70,5 +71,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean isEmpty(EditText v){
         if(v.getText().toString().trim().length()>0)return false;
         return true;
+    }
+    @Override
+    public Dialog onCreateDialog(int identifiant) {
+
+        if(mProgressBar == null) {
+            mProgressBar = new ProgressDialog(this);
+            mProgressBar.setTitle("Loading your chatbot");
+            mProgressBar.setCancelable(false);
+            mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressBar.setIndeterminate(true);
+        }
+        return mProgressBar;
+    }
+    public void loadChatbot(){
+        showDialog(0);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatBot = new ChatBot(MainActivity.this);
+                mProgressBar.dismiss();
+                ConversationAdapter.setChatBot(chatBot);
+            }
+        });
+        thread.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadChatbot();
+
     }
 }

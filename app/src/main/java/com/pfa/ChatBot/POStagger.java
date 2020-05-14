@@ -7,11 +7,12 @@ import android.util.Log;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
-public class POStagger {
+public class POStagger  {
     private InputStream modelIn;
     private POSTaggerME myCategorizer;
     private String[] posTokens;

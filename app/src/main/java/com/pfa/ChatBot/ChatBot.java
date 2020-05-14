@@ -4,9 +4,10 @@ package com.pfa.ChatBot;
 import android.content.Context;
 import android.util.Log;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChatBot{
+public class ChatBot  {
     private SentenceBreaker breaker;
     private Tokenizer tokenizer;
     private POStagger POStags;
@@ -58,7 +59,7 @@ public class ChatBot{
             else{
                 answer = answer + "Sorry i got confused ,what Do you mean : " ;
                 for (int index : category){
-                    answer += categorizer.getCategory(index) + " \n ";
+                    answer += categorizer.getCategory(index) + "\n";
                 }
             }
             // Get predefined answer from given category & add to answer
@@ -74,4 +75,8 @@ public class ChatBot{
         return conversationComplete;
     }
     public Boolean isTrained(){return Trained; }
+
+    public String getAnswer(String token) {
+        return Answers.get(token);
+    }
 }

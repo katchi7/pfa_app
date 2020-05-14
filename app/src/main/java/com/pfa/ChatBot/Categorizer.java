@@ -1,18 +1,11 @@
 package com.pfa.ChatBot;
-
-
-
 import android.content.Context;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 
-public class Categorizer {
+public class Categorizer{
     private DoccatModel model;
     private DocumentCategorizerME myCategorizer;
     private Context context;
@@ -54,4 +47,5 @@ public class Categorizer {
         return categories;
     }
     public String getCategory(int index){return myCategorizer.getCategory(index);}
+
 }

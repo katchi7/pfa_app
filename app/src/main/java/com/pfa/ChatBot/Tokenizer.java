@@ -6,13 +6,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
-public class Tokenizer {
+public class Tokenizer implements Serializable {
     private InputStream modelIn;
     private TokenizerME myCategorizer;
     private String[] tokens;

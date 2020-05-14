@@ -9,10 +9,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
+
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 
-public class Lemmatizer {
+public class Lemmatizer  {
     private InputStream modelIn;
     private LemmatizerME myCategorizer;
     private String[] lemmaTokens;
