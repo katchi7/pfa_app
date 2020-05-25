@@ -7,17 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.pfa.ChatBot.ChatBot;
-
 import java.util.HashMap;
 import java.util.List;
 
 public class ConversationAdapter extends BaseAdapter implements View.OnClickListener {
     private List<Message> Messages;
     private Context context;
-    private static ChatBot chatBot;
     private TextView Message3_textView;
     private TextView Message2_textView;
     private static HashMap<String,String> Question_token = new HashMap<>();
@@ -86,19 +81,13 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
         return convertView;
     }
     public void onClick(View v) {
-        if (chatBot != null) {
         Log.d("testing","Clicked");
         TextView textView = (TextView) v;
         Log.d("testing",token_Question.get(textView.getText().toString().trim()));
-        String Answer = chatBot.getAnswer(token_Question.get(textView.getText().toString().trim()));
+        String Answer = CategoryAswer.get(token_Question.get(textView.getText().toString().trim()));
         Messages.add(new Message("YourChatbot",Answer,false));
         this.notifyDataSetChanged();
         MainActivity.Messages_lv.smoothScrollToPosition(this.getCount()-1);
 
-        }
-    }
-
-    public static void setChatBot(ChatBot booter) {
-        chatBot = booter;
     }
 }

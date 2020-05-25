@@ -5,18 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.pfa.ChatBot.ChatBot;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private EditText Message_Et;
@@ -24,83 +28,94 @@ public class MainActivity extends AppCompatActivity {
     public static ListView Messages_lv;
     private ConversationAdapter Adapter;
     private ArrayList<Message> message;
+    private CategoryAswer categoryAswer;
+    private AnswerHandler handler;
     private boolean sender = true;
-    private ChatBot chatBot ;
-    private ProgressDialog mProgressBar = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);Message_Et = findViewById(R.id.message_et);
+        loadAnswers();
         Send_btn = findViewById(R.id.send);
         Messages_lv = findViewById(R.id.Conversation_lv);
+        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.action_bar_layout);
         message = new ArrayList<>();
         Adapter = new ConversationAdapter(MainActivity.this,message);
         Messages_lv.setAdapter(Adapter);
+        handler = new AnswerHandler(Messages_lv,Adapter,message);
         Send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 if(chatBot!=null) {
-                if (!isEmpty(Message_Et) && chatBot.isTrained()) {
+                if (!isEmpty(Message_Et)) {
                     String Msg = Message_Et.getText().toString();
                     String ChatBotAnswer = null;
                     message.add(new Message("You", Msg, sender));
+                    GetCategory();
                     Message_Et.getText().clear();
-                        try {
-                            ChatBotAnswer = chatBot.ChatbotAnswer(Msg);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
                     Log.d("testing","---------------checking ChatbotAnswer : "+ChatBotAnswer);
                         if (ChatBotAnswer != null)
                             message.add(new Message("Your Chatbot", ChatBotAnswer, !sender));
                     Adapter.notifyDataSetChanged();
                     Messages_lv.smoothScrollToPosition(Adapter.getCount()-1);
-                }else{
-                    if (!chatBot.isTrained()) Toast.makeText(MainActivity.this,"Wait a minute, I'm not loaded yet",Toast.LENGTH_SHORT).show();
-                    else Toast.makeText(MainActivity.this,"I'm waiting for your questions",Toast.LENGTH_SHORT).show();
                 }
-                }else{
-
-                     Toast.makeText(MainActivity.this,"Wait a minute, I'm not loaded yet",Toast.LENGTH_LONG).show();
-                 }
             }
         });
 
+    }
+    public void loadAnswers(){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryAswer=new CategoryAswer(MainActivity.this);
+            }
+        });
     }
     public boolean isEmpty(EditText v){
         if(v.getText().toString().trim().length()>0)return false;
         return true;
     }
-    @Override
-    public Dialog onCreateDialog(int identifiant) {
-
-        if(mProgressBar == null) {
-            mProgressBar = new ProgressDialog(this);
-            mProgressBar.setTitle("Loading your chatbot");
-            mProgressBar.setCancelable(false);
-            mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mProgressBar.setIndeterminate(true);
-        }
-        return mProgressBar;
-    }
-    public void loadChatbot(){
-        showDialog(0);
-        Thread thread = new Thread(new Runnable() {
+    public void GetCategory(){
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                chatBot = new ChatBot(MainActivity.this);
-                mProgressBar.dismiss();
-                ConversationAdapter.setChatBot(chatBot);
+                String question = message.get(message.size()-1).getMessage();
+
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url("https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/"+question.replace(" ","%20"))
+                        .get()
+                        .addHeader("accept", "application/json")
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    String data = response.body().string();
+                    Log.d("testing",data);
+                    if(data.contains("answer")) {
+                        JsonParser parser = new JsonParser();
+                        JsonObject obj = parser.parse(data).getAsJsonObject();
+                        String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
+                        String Answer = categoryAswer.get(Categorie.trim());
+                        android.os.Message tosend = handler.obtainMessage();
+                        tosend.obj = Answer;
+                        handler.sendMessage(tosend);
+
+                    }
+                    else{Log.d("testing","go check ibm");}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("testing",e.toString());
+                }
+
             }
         });
-        thread.start();
-    }
 
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
-        loadChatbot();
-
     }
 }
