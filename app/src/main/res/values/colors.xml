@@ -7,4 +7,6 @@
     <color name="background">#ffffff</color>
     <color name="miss_understanding">#986E6E</color>
     <color name="loading">#453232</color>
+    <color name="DarkMode">#333232</color>
+    <color name="DefaultMode">#FFFFFF</color>
 </resources>

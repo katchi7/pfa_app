@@ -56,6 +56,8 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
             public void onAnimationRepeat(Animation animation) { }
         });
         animation2 = AnimationUtils.loadAnimation(context,R.anim.loading);
+        animation2.setRepeatCount(2);
+        animation2.setRepeatMode(Animation.REVERSE);
         animation2.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
@@ -112,11 +114,12 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
                 if (msg == "") {
                     Message2_textView.setVisibility(View.GONE);
                     Message3_textView.setVisibility(View.GONE);
+                    Message_textView.setVisibility(View.GONE);
                     image1.startAnimation(animation1);
 
                 } else {
                     loading_ly.setVisibility(View.GONE);
-
+                    Message_textView.setVisibility(View.VISIBLE);
 
                     if (msg.contains("Sorry i got confused ")) {
                         String[] message = msg.split(":");
