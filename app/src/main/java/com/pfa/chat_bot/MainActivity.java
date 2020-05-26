@@ -8,7 +8,6 @@ import android.content.ClipboardManager;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -38,17 +37,12 @@ public class MainActivity extends AppCompatActivity {
     public static ListView Messages_lv;
     private ConversationAdapter Adapter;
     private ArrayList<Message> message;
-    private CategoryAswer categoryAswer;
     private AnswerHandler handler;
     private LinearLayout parent_ly;
     private boolean DarkMode = false;
     private boolean sender = true;
-    private static final String MESSAGE_ID = "com.pfa.chat_bot.message";
-    private static final String SIZE_ID = "com.pfa.chat_bot.size";
     private static final String DARK_MODE = "com.pfa.chat_bot.DarkMode";
     public static final String API = "https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/";
-    private int size;
-    private Menu menu;
     private SharedPreferences User_Preferences;
 
     @Override
@@ -56,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Message_Et = findViewById(R.id.message_et);
-        loadAnswers();
         parent_ly = findViewById(R.id.parently);
         Send_btn = findViewById(R.id.send);
         User_Preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -86,14 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void loadAnswers() {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                categoryAswer = new CategoryAswer(MainActivity.this);
-            }
-        });
-    }
 
     public boolean isEmpty(EditText v) {
         if (v.getText().toString().trim().length() > 0) return false;
@@ -126,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         JsonParser parser = new JsonParser();
                         JsonObject obj = parser.parse(data).getAsJsonObject();
                         String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
-                        String Answer = categoryAswer.get(Categorie.trim());
+                        String Answer = CategoryAswer.get(Categorie.trim());
                         tosend = handler.obtainMessage();
                         tosend.obj = Answer;
                         tosend.arg1 = 1;

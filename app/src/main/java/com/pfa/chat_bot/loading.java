@@ -31,6 +31,7 @@ public class loading extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+                CategoryAswer.loadAnswers(loading.this);
                 String data = "";
                 android.os.Message tosend;
                 OkHttpClient client = new OkHttpClient();

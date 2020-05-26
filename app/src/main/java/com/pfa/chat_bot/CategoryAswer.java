@@ -12,10 +12,12 @@ import java.util.Map;
 public class CategoryAswer  {
     private Context context;
     private static Map<String, String> questionAnswer = new HashMap<>();
+    private static CategoryAswer categoryAswer;
     /*
      * Define answers for each given category.
+     * a singleton class
      */
-    public CategoryAswer(Context context) {
+    private CategoryAswer(Context context) {
         String temp = "";
         String[] Answers;
         byte[] buffer;
@@ -39,6 +41,10 @@ public class CategoryAswer  {
                 questionAnswer.put(contets[0].trim(), contets[1]);
             }
         }
+    }
+    public static void loadAnswers(Context context){
+
+        categoryAswer = new CategoryAswer(context);
     }
     public static String get(String category){
         return questionAnswer.get(category);

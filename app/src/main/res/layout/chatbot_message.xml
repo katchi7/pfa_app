@@ -25,47 +25,49 @@
     android:layout_below="@+id/name"
     android:layout_alignLeft="@+id/name"
     >
+
     <LinearLayout
         android:id="@+id/loading_ly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
+        android:orientation="horizontal"
         android:paddingStart="5dp"
+        android:paddingTop="10dp"
         android:paddingEnd="5dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
-    <ImageView
-        android:id="@+id/image1"
-        android:layout_marginStart="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:src="@drawable/loading"
-        android:layout_gravity="center_vertical"
-        android:alpha="0.5"
-        />
-    <ImageView
-        android:id="@+id/image2"
-        android:layout_marginStart="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:src="@drawable/loading"
-        android:layout_gravity="center_vertical"
-        android:alpha="0.5"
-        />
-    <ImageView
-        android:id="@+id/image3"
-        android:layout_marginStart="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/loading"
-        android:layout_gravity="center_vertical"
-        android:alpha="0.7"
-        />
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.3"
+            android:alpha="0.5"
+            android:src="@drawable/loading" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="2dp"
+            android:layout_weight="0.3"
+            android:alpha="0.5"
+            android:src="@drawable/loading" />
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.3"
+            android:alpha="0.7"
+            android:baselineAligned="false"
+            android:src="@drawable/loading" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
