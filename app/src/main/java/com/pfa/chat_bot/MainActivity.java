@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean sender = true;
     private static final String DARK_MODE = "com.pfa.chat_bot.DarkMode";
     public static final String API = "https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/";
+    private MessageDao Message_database;
     private SharedPreferences User_Preferences;
+    private int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +144,13 @@ public class MainActivity extends AppCompatActivity {
         if (DarkMode)
             parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode));
         else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode));
+        Message_database = new MessageDao(MainActivity.this);
+        Message_database.open();
+        Cursor c = Message_database.SelectMessages();
+        while (c.moveToNext()){
+           message.add(new Message(c.getString(3),c.getString(1),c.getInt(2)!=0));
+        }
+        size = message.size();
 
     }
 
@@ -168,29 +179,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        Message_database.DeleteAll();
+        for(int i = 0;i<message.size();i++ ) if(message.get(i).getMessage()!="") Message_database.Insert(message.get(i));
+        Message_database.close();
         SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);
             editor.commit();
+        Adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE,Menu.FIRST,Menu.NONE,"Coupier");
-
-
+        menu.add(Menu.NONE,Menu.FIRST,Menu.NONE,"Copy");
+        menu.add(Menu.NONE,Menu.FIRST+1,Menu.NONE,"Delete");
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == Menu.FIRST){
-             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            String toCopy = ((TextView)info.targetView.findViewById(R.id.message_body)).getText().toString();
-            ClipboardManager clip_board_manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("toCopy",toCopy);
-            clip_board_manager.setPrimaryClip(clipData);
-            return true;
-        }
+        switch (item.getItemId()) {
+
+            case Menu.FIRST:
+                AdapterView.AdapterContextMenuInfo info;
+                info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                String toCopy = ((TextView) info.targetView.findViewById(R.id.message_body)).getText().toString();
+                ClipboardManager clip_board_manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("toCopy", toCopy);
+                clip_board_manager.setPrimaryClip(clipData);
+                return true;
+            case Menu.FIRST+1:
+                info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                int Position = info.position;
+                message.remove(Position);
+                if (Position < size) size--;
+                Adapter.notifyDataSetChanged();
+                return true;
+            }
         return super.onContextItemSelected(item);
     }
 }
