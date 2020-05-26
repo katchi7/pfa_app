@@ -3,20 +3,25 @@ package com.pfa.chat_bot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Adapter = new ConversationAdapter(MainActivity.this, message);
         Messages_lv.setAdapter(Adapter);
         handler = new AnswerHandler(Messages_lv, Adapter, message);
+        registerForContextMenu(Messages_lv);
         Send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,5 +186,26 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);
             editor.commit();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE,Menu.FIRST,Menu.NONE,"Coupier");
+
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == Menu.FIRST){
+             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            String toCopy = ((TextView)info.targetView.findViewById(R.id.message_body)).getText().toString();
+            ClipboardManager clip_board_manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("toCopy",toCopy);
+            clip_board_manager.setPrimaryClip(clipData);
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }
