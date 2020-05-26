@@ -1,20 +1,38 @@
 package com.pfa.chat_bot;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class ConversationAdapter extends BaseAdapter implements View.OnClickListener {
+public class ConversationAdapter extends BaseAdapter implements View.OnClickListener{
     private List<Message> Messages;
     private Context context;
+    private TextView Message_textView;
     private TextView Message3_textView;
     private TextView Message2_textView;
+    private LinearLayout Message_ly;
+    private LinearLayout loading_ly;
+    private ImageView image1;
+    private ImageView image2;
+    private ImageView image3;
+    private Animation animation1;
+    private Animation animation2;
+    private Animation animation3;
+    private int count;
     private static HashMap<String,String> Question_token = new HashMap<>();
     private static HashMap<String,String> token_Question = new HashMap<>();
     static {
@@ -28,6 +46,33 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
         for (String s : Question_token.keySet()){
             token_Question.put(Question_token.get(s).trim(),s);
         }
+        animation1 = AnimationUtils.loadAnimation(context,R.anim.loading);
+         animation1.setAnimationListener(new Animation.AnimationListener() {
+             @Override
+             public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {image2.startAnimation(animation2);}
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
+        animation2 = AnimationUtils.loadAnimation(context,R.anim.loading);
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) { image3.startAnimation(animation3); }
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
+        animation3 = AnimationUtils.loadAnimation(context,R.anim.loading);
+        animation3.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {image1.startAnimation(animation1);}
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
     }
     @Override
     public int getCount() {
@@ -47,36 +92,55 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Message CurentMessage = (Message) getItem(position);
-        if(!CurentMessage.isUser()) {
-                    convertView = LayoutInflater.from(context).inflate(R.layout.chatbot_message, parent, false);
-            TextView Message_textView = convertView.findViewById(R.id.message_body);
-            Message2_textView = convertView.findViewById(R.id.message_body2);
+        boolean first = false;
+        if(convertView==null){
+            first = true;
+        }
+            if (!CurentMessage.isUser()) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.chatbot_message, parent, false);
 
-            Message3_textView = convertView.findViewById(R.id.message_body3);
-            String msg = CurentMessage.getMessage();
-            if(msg.contains("Sorry i got confused ")){
-                String[] message = msg.split(":");
-                Message_textView.setText(message[0]);
+                Message_textView = convertView.findViewById(R.id.message_body);
+                Message2_textView = convertView.findViewById(R.id.message_body2);
+                Message3_textView = convertView.findViewById(R.id.message_body3);
+                Message_ly = convertView.findViewById(R.id.Message_ly);
+                loading_ly = convertView.findViewById(R.id.loading_ly);
+                image1 = convertView.findViewById(R.id.image1);
+                image2 = convertView.findViewById(R.id.image2);
+                image3 = convertView.findViewById(R.id.image3);
 
-                message = message[1].replace("miss-understanding\n","").replace("greeting\n","").replace("conversation-complete\n","").replace("conversation-continue\n","").split("\\n");
-                Message2_textView.setText(Question_token.get(message[0].trim()));
-                Message3_textView.setText(Question_token.get(message[1].trim()));
-                Message2_textView.setOnClickListener(this::onClick);
-                Message3_textView.setOnClickListener(this::onClick);
-            }else{
-                Message_textView.setText(msg);
-                Message2_textView.setVisibility(View.GONE);
-                Message3_textView.setVisibility(View.GONE);
+                String msg = CurentMessage.getMessage();
+                if (msg == "") {
+                    Message2_textView.setVisibility(View.GONE);
+                    Message3_textView.setVisibility(View.GONE);
+                    image1.startAnimation(animation1);
+
+                } else {
+                    loading_ly.setVisibility(View.GONE);
+
+
+                    if (msg.contains("Sorry i got confused ")) {
+                        String[] message = msg.split(":");
+                        Message_textView.setText(message[0]);
+
+                        message = message[1].replace("miss-understanding\n", "").replace("greeting\n", "").replace("conversation-complete\n", "").replace("conversation-continue\n", "").split("\\n");
+                        Message2_textView.setText(Question_token.get(message[0].trim()));
+                        Message3_textView.setText(Question_token.get(message[1].trim()));
+                        Message2_textView.setOnClickListener(this::onClick);
+                        Message3_textView.setOnClickListener(this::onClick);
+                    } else {
+                        Message_textView.setText(msg);
+                        Message2_textView.setVisibility(View.GONE);
+                        Message3_textView.setVisibility(View.GONE);
+                    }
+                }
+
+
+            } else {
+                convertView = LayoutInflater.from(context).inflate(R.layout.user_message, parent, false);
+                TextView Message_textView = convertView.findViewById(R.id.message_body);
+                Message_textView.setText(CurentMessage.getMessage());
+
             }
-
-
-        }
-        else{
-            convertView = LayoutInflater.from(context).inflate(R.layout.user_message, parent, false);
-            TextView Message_textView = convertView.findViewById(R.id.message_body);
-            Message_textView.setText(CurentMessage.getMessage());
-
-        }
 
         return convertView;
     }

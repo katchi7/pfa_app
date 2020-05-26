@@ -1,5 +1,8 @@
 package com.pfa.chat_bot;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Message {
     private String Message;
     private String sender;
@@ -9,6 +12,7 @@ public class Message {
         this.sender = sender;
         this.Message = Message;
     }
+
     public String getSender() {
         return sender;
     }
@@ -19,5 +23,9 @@ public class Message {
 
     public boolean isUser() {
         return isUser;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
     }
 }
