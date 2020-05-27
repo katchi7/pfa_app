@@ -141,8 +141,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         User_Preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         DarkMode = User_Preferences.getBoolean(DARK_MODE,false);
-        if (DarkMode)
+        if (DarkMode) {
             parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode));
+        }
         else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode));
         Message_database = new MessageDao(MainActivity.this);
         Message_database.open();
@@ -151,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
            message.add(new Message(c.getString(3),c.getString(1),c.getInt(2)!=0));
         }
         size = message.size();
+        Adapter.notifyDataSetChanged();
+        Messages_lv.smoothScrollToPosition(size-1);
 
     }
 
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Message_database.DeleteAll();
         for(int i = 0;i<message.size();i++ ) if(message.get(i).getMessage()!="") Message_database.Insert(message.get(i));
+        message.clear();
         Message_database.close();
         SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);

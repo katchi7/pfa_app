@@ -7,7 +7,7 @@
     android:padding = "10dp"
     android:weightSum = "1"
     android:orientation="horizontal"
-    android:background="@color/colorPrimary">
+    android:background="@color/ActionBar">
     <LinearLayout
         android:layout_width = "0dp"
         android:layout_height = "match_parent"

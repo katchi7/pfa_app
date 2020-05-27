@@ -9,4 +9,5 @@
     <color name="loading">#453232</color>
     <color name="DarkMode">#333232</color>
     <color name="DefaultMode">#FFFFFF</color>
+    <color name="ActionBar">#9E9393</color>
 </resources>
