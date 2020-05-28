@@ -26,7 +26,7 @@ public class MessageDao extends BaseDAO{
         mDb.insert(MessageDao.Table_Name, null, value);
     }
     public Cursor SelectMessages(){
-        Cursor c = mDb.rawQuery("select * from " + Table_Name ,null);
+        Cursor c = mDb.rawQuery("select * from " + Table_Name+" ORDER BY "+ID+" ASC"  ,null);
         return c;
     }
 }

@@ -111,6 +111,7 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
                 image3 = convertView.findViewById(R.id.image3);
 
                 String msg = CurentMessage.getMessage();
+
                 if (msg == "") {
                     Message2_textView.setVisibility(View.GONE);
                     Message3_textView.setVisibility(View.GONE);
@@ -120,9 +121,11 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
                 } else {
                     loading_ly.setVisibility(View.GONE);
                     Message_textView.setVisibility(View.VISIBLE);
-
+                    msg = CurentMessage.getMessage();
                     if (msg.contains("Sorry i got confused ")) {
                         String[] message = msg.split(":");
+                        Message2_textView.setVisibility(View.VISIBLE);
+                        Message3_textView.setVisibility(View.VISIBLE);
                         Message_textView.setText(message[0]);
 
                         message = message[1].replace("miss-understanding\n", "").replace("greeting\n", "").replace("conversation-complete\n", "").replace("conversation-continue\n", "").split("\\n");
@@ -130,6 +133,7 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
                         Message3_textView.setText(Question_token.get(message[1].trim()));
                         Message2_textView.setOnClickListener(this::onClick);
                         Message3_textView.setOnClickListener(this::onClick);
+
                     } else {
                         Message_textView.setText(msg);
                         Message2_textView.setVisibility(View.GONE);

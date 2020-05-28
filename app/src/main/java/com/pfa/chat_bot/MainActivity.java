@@ -115,7 +115,10 @@ public class MainActivity extends AppCompatActivity {
                         JsonParser parser = new JsonParser();
                         JsonObject obj = parser.parse(data).getAsJsonObject();
                         String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
-                        String Answer = CategoryAswer.get(Categorie.trim());
+                        String Answer = "";
+                        if(Categorie.contains("Sorry i got confused ")) Answer = Categorie;
+                        else Answer = CategoryAswer.get(Categorie.trim());
+
                         tosend = handler.obtainMessage();
                         tosend.obj = Answer;
                         tosend.arg1 = 1;
@@ -148,13 +151,14 @@ public class MainActivity extends AppCompatActivity {
         Message_database = new MessageDao(MainActivity.this);
         Message_database.open();
         Cursor c = Message_database.SelectMessages();
+        message.clear();
         while (c.moveToNext()){
            message.add(new Message(c.getString(3),c.getString(1),c.getInt(2)!=0));
+           size++;
         }
-        size = message.size();
         Adapter.notifyDataSetChanged();
-        Messages_lv.smoothScrollToPosition(size-1);
-
+        Log.d("testing",Integer.toString(Adapter.getCount()-1));
+        Messages_lv.setSelection(Adapter.getCount()-1);
     }
 
     @Override
@@ -189,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);
             editor.commit();
-        Adapter.notifyDataSetChanged();
     }
 
     @Override

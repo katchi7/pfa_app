@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class AnswerHandler extends Handler{
                 Answer = (String) msg.obj;
                 Posision = msg.arg2;
                 UpdateItem(Posision, Answer);
+                Log.d("testing",Answer);
                 break;
 
         }
@@ -56,7 +58,6 @@ public class AnswerHandler extends Handler{
     private void UpdateItem(int position,String Answer){
         if (position == messages.size())messages.add(new com.pfa.chat_bot.Message("YourChatbot",Answer,false));
         else messages.get(position).setMessage(Answer);
-
         Adapter.notifyDataSetChanged();
         view.smoothScrollToPosition(messages.size()-1);
     }
