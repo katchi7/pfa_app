@@ -159,8 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
                         String data = response.body().string();
                         if(data.contains("answer")){
-                            Answer = CategoryAswer.get(data.split(":")[1].trim());
+
+                            Answer = CategoryAswer.getFR(data.split(":")[1].trim());
+                            Log.d("testing","Entered");
                             Log.d("testing",data.split(":")[1].trim());
+                            Log.d("testing",Answer);
                             tosend = handler.obtainMessage();
                             tosend.obj = Answer;
                             tosend.arg1 = 1;

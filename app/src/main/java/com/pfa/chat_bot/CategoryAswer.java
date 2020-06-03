@@ -12,6 +12,7 @@ import java.util.Map;
 public class CategoryAswer  {
     private Context context;
     private static Map<String, String> questionAnswer = new HashMap<>();
+    private static Map<String, String> questionAnswerFR = new HashMap<>();
     private static CategoryAswer categoryAswer;
     /*
      * Define answers for each given category.
@@ -37,8 +38,31 @@ public class CategoryAswer  {
         if (temp != null) {
             Answers = temp.split("/");
             for (String S : Answers) {
+
                 String[] contets = S.split("#");
                 questionAnswer.put(contets[0].trim(), contets[1]);
+            }
+        }
+        temp = "";
+        try {
+            InputStream file = context.getAssets().open("ChatbotAnswersFR.txt");
+            buffer = new byte[file.available()];
+            while(file.read(buffer)!=-1){
+                temp += new String(buffer);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+
+        }
+
+        if (temp != null) {
+            Answers = temp.split("/");
+
+            for (String S : Answers) {
+                String[] contets = S.split("#");
+                questionAnswerFR.put(contets[0].trim(), contets[1]);
             }
         }
     }
@@ -48,5 +72,8 @@ public class CategoryAswer  {
     }
     public static String get(String category){
         return questionAnswer.get(category);
+    }
+    public static String getFR(String category){
+        return questionAnswerFR.get(category);
     }
 }

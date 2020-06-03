@@ -2,6 +2,7 @@ miss-understanding # Sorry! I didn't get you! explain more :)/
 greeting # Hello, how can I help you?/
 conversation-continue # What else can I help you with?/
 abdominal-pain #
+Treatment for abdominal pain:
 1. Treat Symptoms
 -For heartburn from gastroesophageal reflux disease (GERD), take an over-the-counter antacid or acid reducer.
 -For constipation, take a mild stool softener or laxative.
@@ -20,6 +21,7 @@ Seek medical help if the person:
 -Has heartburn that isn't relieved by over-the-counter drugs or last longer than two weeks. /
 
 animal-bites #
+Treatment for animal bites :
 1. Stop Bleeding
 -Apply direct pressure until bleeding stops.
 
@@ -39,6 +41,7 @@ The person may also require a tetanus shot or booster.
 The health care provider may recommend ibuprofen or acetaminophen/
 
 insect-sting#
+Treatement for insect stings
 If the person does not have severe allergy symptoms:
 1. Remove the Stinger
 -Scrape the area with a fingernail or use tweezers to remove it.
@@ -62,6 +65,7 @@ Nausea, abdominal pain, or vomiting
 Fast heartbeat or pulse
 Skin that itches, tingles, swells, or turns red/
 Anxiety-dizziness#
+Treatement for Anxiety dizziness
 Loss of consciousness
 2. Inject Epinephrine Immediately
 If the person has an anaphylaxis action plan from a doctor for injecting epinephrine and other emergency measures, follow it. Otherwise, if the person carries an epinephrine shot or one is available:
@@ -79,6 +83,7 @@ Make sure that someone stays with the person for 24 hours after anaphylaxis in c
 Report the reaction to the person's doctor/
 
 urine-blood #
+Treatement for urine blood
 1. Get Help
 -Call your health care provider to set up a prompt appointment, even if you only see blood once in the urine. Inform the staff about the blood when you call.
 -Symptoms include blood clots or red, pink, orange, or brown color in urine.
@@ -96,6 +101,7 @@ Kidney imaging studies to check for a tumor, kidney or bladder stone, enlarged p
 Cystoscopic examination (taking pictures of the inside of the bladder) to check for a tumor or bladder stone/
 
 broken-toe#
+Treatement for broken toes
 Symptoms of a broken toe include: pain, swelling, bruising, and difficulty walking.
 1. Prevent Swelling and Further Injury
 •	Stay off the foot as much as possible.
@@ -142,6 +148,7 @@ Treating a Bruise at Home
 2.	Pain and tenderness should get better within a few days and the bruise should go away within a couple of weeks./
 
 thermal-burns #
+Treatement for thermal burns
 For All Burns
 1. Stop Burning Immediately
 -Put out fire or stop the person's contact with hot liquid, steam, or other material.
@@ -203,6 +210,7 @@ Check pulse and breathing to monitor for shock until emergency help arrives.
 Doctors will give oxygen and fluid, if needed, and treat the burn./
 
 choking#
+Treatement for choking
 If the Person Is Conscious but Not Able to Breathe or Talk:
 1. Give Back Blows
 -Give up to 5 blows between the shoulder blades with the heel of your hand.
@@ -226,6 +234,7 @@ When emergency medical personnel arrive, they will take over and may do CPR or t
 
 
 cuts#
+Treatement for cuts
 In general, a cut that needs stitches has to be repaired within 6 hours of the injury. The exception is cuts to the face and scalp, which generally can be repaired up to 24 hours after the injury.
 Take the following steps for minor cuts.
 1. Stop the Bleeding
@@ -276,6 +285,7 @@ Diarrhea in an adult worsens or doesn’t clear up after 2 or 3 days
 A child doesn’t feel better after 24 hours./
 
 dizziness#
+Treating dizziness
 1. Treat Symptoms
 The person should sit down or lie still.
 If the person gets light-headed when standing up, the person should stand up slowly.Avoid sudden changes in position.
@@ -292,6 +302,7 @@ If blood tests reveal abnormal blood chemistry (electrolyte levels), this will b
 Health care providers may start emergency treatment for heart attack or stroke, blood transfusion, or surgery./
 
 food-poisoning#
+Treatement for food poisoning
 1.Control Nausea and Vomiting
 Avoid solid foods until vomiting ends. Then eat light, bland foods, such as saltine crackers, bananas, rice, or bread.
 Sipping soda may help prevent vomiting.
@@ -310,6 +321,7 @@ Call a doctor immediately for diarrhea:
 -With signs of severe dehydration, such as dry mouth, decreased urination, dizziness, fatigue, or increased heart rate or breathing rate./
 
 heart-palpitations#
+Treatement for heart palpitations
 1. Take Steps to Reduce Heart Palpitations
     -Leave a stressful situation and try to be calm. Anxiety, stress, fear, or panic can cause palpitations.
     -Cut back on coffee, tea, chocolate, and colas if caffeine seems to cause palpitations.
@@ -322,6 +334,7 @@ heart-palpitations#
     -Always call a doctor if palpitations change in nature or increase suddenly./
 
 heat-exhaustion#
+Treatement for heat exhaustion
 1. Lower Body Temperature
     -Get the person out of the heat and into a cool environment.
     -If air-conditioning is not available, fan the person.
@@ -337,6 +350,7 @@ heat-exhaustion#
         -The person is nauseated or vomiting./
 
 heat-stroke#
+Treatement for heat stroke
 Heat stroke is a medical emergency.
     1. Lower Body Temperature Quickly
         -Get the person out of the sun.
@@ -350,6 +364,7 @@ Heat stroke is a medical emergency.
     -At the hospital, health care providers will rehydrate the person and continue cooling as needed./
 
 hypothermia#
+Treatement for hypothermia
 1. In children and adults, symptoms include:
     -Confusion, memory loss, or slurred speech
     -Drop in body temperature below 95 F
@@ -381,6 +396,7 @@ In infants, symptoms include:
     -At the hospital, health care providers will continue warming efforts, including intravenous fluids and warm, moist oxygen./
 
 nosebleeds#
+Treatement for nosebleeds
 1. Stop the Bleeding
 -Have the person sit up straight and lean forward slightly. Don't have the person lie down or tilt the head backward.
 -With thumb and index finger, firmly pinch the nose just below the bone up against the face.
@@ -398,6 +414,7 @@ See a health care provider immediately if:
 -The person should avoid strenuous activity; bending over; and blowing, rubbing or picking the nose until it heals./
 
 muscle-strain#
+Treating muscle strain
 1. Control Swelling and Prevent Further Injury With PRICE
 -Protect by applying an elastic bandage, sling, or splint.
 -Rest the muscle for at least a day.
@@ -417,6 +434,7 @@ Call a health care provider if:
 -The person needs advice on how (and how soon) to resume normal exercise and activity./
 
 sprains-strains #
+Treatement for sprains-strain
 1. Control Swelling With RICE Therapy
 -Rest the sprained or strained area. If necessary, use a sling for an arm injury or crutches for a leg or foot injury. Splint an injured finger or toe by taping it to an adjacent finger or toe.
 -Ice for 20 minutes every hour.
@@ -438,6 +456,7 @@ All but the most minor strains and sprains should be evaluated by a health care 
 -In severe cases, surgery may be needed./
 
 sunburn#
+Treatement for sunburns
 Call a health care provider if:
 -The burn has blisters or the skin is white-appearing or numb. These are symptoms of a more-serious sunburn
 -The sunburned person is a child under one year old.
