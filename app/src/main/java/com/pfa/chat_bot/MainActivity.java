@@ -7,7 +7,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,8 +28,11 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean DarkMode = false;
     private boolean sender = true;
     private static final String DARK_MODE = "com.pfa.chat_bot.DarkMode";
+    private static final String LANG_PREF = "com.pfa.chat_bot.LANGUAGE";
     public static final String API = "https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/";
+    public static final String Frensh_URL = "https://us-central1-trusty-magnet-279117.cloudfunctions.net/Chatbot";
     private MessageDao Message_database;
+    private static String LANGUAGE ="";
     private SharedPreferences User_Preferences;
+    private Menu m;
     private int size;
 
     @Override
@@ -98,39 +104,73 @@ public class MainActivity extends AppCompatActivity {
                 handler.sendMessage(tosend);
                 String question = message.get(message.size() - 1).getMessage();
                 int position = message.size();
+                if(LANGUAGE.contains("ENG")) {
+                    OkHttpClient client = new OkHttpClient();
 
-                OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url(API + question.replace(" ", "%20"))
+                            .get()
+                            .addHeader("accept", "application/json")
+                            .build();
 
-                Request request = new Request.Builder()
-                        .url(API + question.replace(" ", "%20"))
-                        .get()
-                        .addHeader("accept", "application/json")
-                        .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        String data = response.body().string();
+                        Log.d("testing", data);
+                        if (data.contains("answer")) {
+                            JsonParser parser = new JsonParser();
+                            JsonObject obj = parser.parse(data).getAsJsonObject();
+                            String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
+                            String Answer = "";
+                            if (Categorie.contains("Sorry i got confused ")) Answer = Categorie;
+                            else Answer = CategoryAswer.get(Categorie.trim());
 
-                try {
-                    Response response = client.newCall(request).execute();
-                    String data = response.body().string();
-                    Log.d("testing", data);
-                    if (data.contains("answer")) {
-                        JsonParser parser = new JsonParser();
-                        JsonObject obj = parser.parse(data).getAsJsonObject();
-                        String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
-                        String Answer = "";
-                        if(Categorie.contains("Sorry i got confused ")) Answer = Categorie;
-                        else Answer = CategoryAswer.get(Categorie.trim());
+                            tosend = handler.obtainMessage();
+                            tosend.obj = Answer;
+                            tosend.arg1 = 1;
+                            tosend.arg2 = position;
+                            handler.sendMessage(tosend);
 
-                        tosend = handler.obtainMessage();
-                        tosend.obj = Answer;
-                        tosend.arg1 = 1;
-                        tosend.arg2 = position;
-                        handler.sendMessage(tosend);
-
-                    } else {
-                        Log.d("testing", "go check ibm");
+                        } else {
+                            Log.d("testing", "go check ibm");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.d("testing", e.toString());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.d("testing", e.toString());
+                }
+                else{
+                    String Answer = "";
+                    OkHttpClient client = new OkHttpClient();
+                    String json = "{\"question\":\""+question+"\"}";
+
+                    RequestBody body = RequestBody.create(
+                            MediaType.parse("application/json"), json);
+
+                    Request request = new Request.Builder()
+                            .url(Frensh_URL)
+                            .post(body)
+                            .build();
+
+                    Call call = client.newCall(request);
+                    Response response = null;
+                    try {
+                        response = call.execute();
+
+                        String data = response.body().string();
+                        if(data.contains("answer")){
+                            Answer = CategoryAswer.get(data.split(":")[1].trim());
+                            Log.d("testing",data.split(":")[1].trim());
+                            tosend = handler.obtainMessage();
+                            tosend.obj = Answer;
+                            tosend.arg1 = 1;
+                            tosend.arg2 = position;
+                            handler.sendMessage(tosend);
+
+                        }
+                    } catch (IOException e) {
+                        Log.d("testing",e.toString());
+                    }
                 }
 
             }
@@ -144,8 +184,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         User_Preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         DarkMode = User_Preferences.getBoolean(DARK_MODE,false);
+        LANGUAGE = User_Preferences.getString(LANG_PREF,"ENG");
+        Log.d("testing",LANGUAGE);
         if (DarkMode) {
             parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode));
+
         }
         else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode));
         Message_database = new MessageDao(MainActivity.this);
@@ -165,12 +208,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.app_menu, menu);
+        m=menu;
+        Log.d("testing",LANGUAGE);
+        if(LANGUAGE.contains("ENG")){
+            m.findItem(R.id.English).setChecked(true);
+            Log.d("testing","Entered");
+        }
+        else m.findItem(R.id.frensh).setChecked(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
+        MenuItem ang;
+        MenuItem fr;
+        SharedPreferences.Editor editor;
         switch (item.getItemId()) {
             case R.id.DarkMode:
                 DarkMode = !DarkMode;
@@ -179,9 +232,33 @@ public class MainActivity extends AppCompatActivity {
                     parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode));
                 else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode));
                 return true;
+            case R.id.English:
+                item.setChecked(!item.isChecked());
+                if(item.isChecked()) LANGUAGE = "ENG";
+
+                fr = m.findItem(R.id.frensh);
+                fr.setChecked(!item.isChecked());
+                editor = User_Preferences.edit();
+                editor.putString(LANG_PREF,LANGUAGE);
+                editor.commit();
+                return true;
+            case R.id.frensh:
+                item.setChecked(!item.isChecked());
+                if(item.isChecked()){
+                    LANGUAGE = "FR";
+                }
+
+                editor = User_Preferences.edit();
+                editor.putString(LANG_PREF,LANGUAGE);
+                editor.commit();
+                ang = m.findItem(R.id.English);
+                ang.setChecked(!item.isChecked());
+                return true;
+
         }
         return false;
     }
+
 
     @Override
     protected void onStop() {
@@ -192,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
         Message_database.close();
         SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);
+            Log.d("testing",LANGUAGE);
             editor.commit();
     }
 

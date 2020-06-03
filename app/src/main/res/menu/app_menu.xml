@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Activate Dark Mode" android:checkable="true" android:titleCondensed="DarkMode" android:id="@+id/DarkMode"/>
+    <item android:title="Language" android:id="@+id/Language">
+        <menu>
+            <group android:checkableBehavior="single" android:id="@+id/group">
+                <item android:title="English" android:id="@+id/English" android:checkable="true"/>
+                <item android:title="Frensh" android:id="@+id/frensh" android:checkable="true"/>
+            </group>
+        </menu>
+    </item>
 </menu>
