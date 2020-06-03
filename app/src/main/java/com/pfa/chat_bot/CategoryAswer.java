@@ -5,7 +5,6 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +36,14 @@ public class CategoryAswer  {
 
         if (temp != null) {
             Answers = temp.split("/");
+            String collect = "";
             for (String S : Answers) {
 
                 String[] contets = S.split("#");
+                collect += contets[0].trim()+"\n";
                 questionAnswer.put(contets[0].trim(), contets[1]);
             }
+            Log.d("collect",collect);
         }
         temp = "";
         try {

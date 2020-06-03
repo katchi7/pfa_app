@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LANG_PREF = "com.pfa.chat_bot.LANGUAGE";
     public static final String API = "https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/";
     public static final String Frensh_URL = "https://us-central1-trusty-magnet-279117.cloudfunctions.net/Chatbot";
+    public static final String Frensh_URL2 = "https://us-central1-trusty-magnet-279117.cloudfunctions.net/Chatbot-1";
     private MessageDao Message_database;
     private static String LANGUAGE ="";
     private SharedPreferences User_Preferences;
@@ -140,40 +141,59 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("testing", e.toString());
                     }
                 }
-                else{
+                else {
                     String Answer = "";
-                    OkHttpClient client = new OkHttpClient();
-                    String json = "{\"question\":\""+question+"\"}";
+                    String data = "";
+                    String url = Frensh_URL;
+                    while (!data.contains("answer")) {
 
-                    RequestBody body = RequestBody.create(
-                            MediaType.parse("application/json"), json);
+                        OkHttpClient client = new OkHttpClient();
+                        String json = "{\"question\":\"" + question + "\"}";
 
-                    Request request = new Request.Builder()
-                            .url(Frensh_URL)
-                            .post(body)
-                            .build();
+                        RequestBody body = RequestBody.create(
+                                MediaType.parse("application/json"), json);
 
-                    Call call = client.newCall(request);
-                    Response response = null;
-                    try {
-                        response = call.execute();
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .post(body)
+                                .build();
 
-                        String data = response.body().string();
-                        if(data.contains("answer")){
+                        Call call = client.newCall(request);
+                        Response response = null;
+                        try {
+                            response = call.execute();
 
-                            Answer = CategoryAswer.getFR(data.split(":")[1].trim());
-                            Log.d("testing","Entered");
-                            Log.d("testing",data.split(":")[1].trim());
-                            Log.d("testing",Answer);
-                            tosend = handler.obtainMessage();
-                            tosend.obj = Answer;
-                            tosend.arg1 = 1;
-                            tosend.arg2 = position;
-                            handler.sendMessage(tosend);
 
+                            data = response.body().string();
+                            if (data.contains("answer")) {
+
+                                Answer = CategoryAswer.getFR(data.split(":")[1].trim());
+                                Log.d("testing", "Entered");
+                                Log.d("testing", data.split(":")[1].trim());
+                                Log.d("testing", Answer);
+                                tosend = handler.obtainMessage();
+                                tosend.obj = Answer;
+                                tosend.arg1 = 1;
+                                tosend.arg2 = position;
+                                handler.sendMessage(tosend);
+
+
+                            }
+                            else{
+                                if(url.contains(Frensh_URL2)){
+                                    url=Frensh_URL;
+                                    Log.d("testing","Changed");
+                                }
+                                else url=Frensh_URL2;
+                                Log.d("testing","URL Changed -> "+url);
+
+                            }
+                        } catch (IOException e) {
+                            if(url.contains(Frensh_URL2)) url=Frensh_URL;
+                            else url=Frensh_URL2;
+                            Log.d("testing",e.toString());
+                            Log.d("testing","URL Changed -> "+url);
                         }
-                    } catch (IOException e) {
-                        Log.d("testing",e.toString());
                     }
                 }
 

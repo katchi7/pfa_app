@@ -81,36 +81,44 @@ public class loading extends AppCompatActivity {
 
                 RequestBody body = RequestBody.create(
                         MediaType.parse("application/json"), json);
+                data="";
+                int trynb =0;
+                String url = MainActivity.Frensh_URL;
+                while (!data.contains("answer") && trynb < 5) {
+                    request = new Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
 
-                request = new Request.Builder()
-                        .url(MainActivity.Frensh_URL)
-                        .post(body)
-                        .build();
+                    Call call = client.newCall(request);
+                    Response response = null;
+                    try {
+                        response = call.execute();
+                        Log.d("testing", "I'm here");
+                        data = response.body().string();
+                        if (data.contains("answer")) {
 
-                Call call = client.newCall(request);
-                Response response = null;
-                try {
-                    data="";
-                    int trynb =0;
-                    while (!data.contains("answer") && trynb < 5) {
-                    response = call.execute();
-                    Log.d("testing","I'm here");
-                    data = response.body().string();
-                    if(data.contains("answer")) {
-
-                        Answer = CategoryAswer.getFR(data.split(":")[1].trim());
-                        Log.d("testing", "Entered");
-                        Log.d("testing", data.split(":")[1].trim());
-                        Log.d("testing", Answer);
-                        tosend = handler.obtainMessage();
-                        tosend.arg1 = -1;
-                        handler.sendMessage(tosend);
+                            Answer = CategoryAswer.getFR(data.split(":")[1].trim());
+                            Log.d("testing", "Entered");
+                            Log.d("testing", data.split(":")[1].trim());
+                            Log.d("testing", Answer);
+                            tosend = handler.obtainMessage();
+                            tosend.arg1 = -1;
+                            handler.sendMessage(tosend);
+                        } else {
+                            if (url.contains(MainActivity.Frensh_URL2)) url = MainActivity.Frensh_URL;
+                            else url = MainActivity.Frensh_URL2;
+                            Log.d("testing", "URL Changed -> " + url);
                         }
-                        trynb++;
-                    }
 
-                } catch (IOException e) {
-                    Log.d("testing",e.toString());
+
+                    } catch (IOException e) {
+                        Log.d("testing", e.toString());
+                        if (url.contains(MainActivity.Frensh_URL2)) url = MainActivity.Frensh_URL;
+                        else url = MainActivity.Frensh_URL2;
+                        Log.d("testing", "URL Changed -> " + url);
+                    }
+                    trynb++;
                 }
                 if(!data.contains("answer")){
                     tosend = handler.obtainMessage();

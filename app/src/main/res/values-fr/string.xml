@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Le ChatBot</string>
+    <string name="title_activity_about">A propo de l\'application</string>
+    <string name="large_text">
+     "Chatbot d'urgence ENSIAS. \n \n"
+     "Cette application est créée par des étudiants ENSIAS, elle contient deux modèles de classification de texte: \n"
+     "\n \n"
+     "Le premier modèle est utilisé pour classer les questions en anglais, construit en utilisant Apache Opennlp en Java"
+     "et hébergé sur les fonctions cloud ibm. \n"
+     "\n"
+     "Le second est utilisé pour classer les questions en français et construit en utilisant tensorflow et python,"
+     "et hébergé sur google cloud \n \n"
+     "Ce chatbot peut donner des traitements pour 20 cas d'urgence différents en anglais et"
+     "langues françaises. \n \n"
+     "Cas d'urgence traités: \n \n"
+     "1- douleur abdominale \n"
+     "2 morsures d'animaux \n"
+     "3- piqûre d'insecte \n"
+     "4- coup de soleil \n"
+     "5- sang d'urine \n"
+     "6- orteil cassé \n"
+     "7- ecchymoses \n"
+     "8- brûlures thermiques \n"
+     "9- étouffement \n"
+     "10 coupes \n"
+     "11- diarrhée \n"
+     "12- vertiges \n"
+     "13- intoxication alimentaire \n"
+     "14- palpitations cardiaques \n"
+     "15- épuisement par la chaleur \n"
+     "16- coup de chaleur \n"
+     "17- hypothermie \n"
+     "18- saignements de nez \n"
+     "19- tension musculaire \n"
+     "20- foulures foulures \n"
+    </string>
+    <string name="action_settings">Paramètres</string>
+</resources>
