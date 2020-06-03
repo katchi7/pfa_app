@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             m.findItem(R.id.English).setChecked(true);
             Log.d("testing","Entered");
         }
-        else m.findItem(R.id.frensh).setChecked(true);
+        else m.findItem(R.id.french).setChecked(true);
         return true;
     }
 
@@ -239,21 +239,14 @@ public class MainActivity extends AppCompatActivity {
                 item.setChecked(!item.isChecked());
                 if(item.isChecked()) LANGUAGE = "ENG";
 
-                fr = m.findItem(R.id.frensh);
+                fr = m.findItem(R.id.french);
                 fr.setChecked(!item.isChecked());
-                editor = User_Preferences.edit();
-                editor.putString(LANG_PREF,LANGUAGE);
-                editor.commit();
                 return true;
-            case R.id.frensh:
+            case R.id.french:
                 item.setChecked(!item.isChecked());
                 if(item.isChecked()){
                     LANGUAGE = "FR";
                 }
-
-                editor = User_Preferences.edit();
-                editor.putString(LANG_PREF,LANGUAGE);
-                editor.commit();
                 ang = m.findItem(R.id.English);
                 ang.setChecked(!item.isChecked());
                 return true;
@@ -271,9 +264,12 @@ public class MainActivity extends AppCompatActivity {
         message.clear();
         Message_database.close();
         SharedPreferences.Editor editor = User_Preferences.edit();
-            editor.putBoolean(DARK_MODE,DarkMode);
-            Log.d("testing",LANGUAGE);
-            editor.commit();
+        editor.putBoolean(DARK_MODE,DarkMode);
+        Log.d("testing",LANGUAGE);
+        editor.putString(LANG_PREF,LANGUAGE);
+        editor.commit();
+        Log.d("testing","done");
+
     }
 
     @Override
@@ -304,5 +300,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

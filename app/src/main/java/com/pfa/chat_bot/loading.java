@@ -11,8 +11,11 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class loading extends AppCompatActivity {
@@ -28,6 +31,10 @@ public class loading extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Load();
+
+    }
+    public void Load(){
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -54,9 +61,6 @@ public class loading extends AppCompatActivity {
                             JsonObject obj = parser.parse(data).getAsJsonObject();
 
                             String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
-                            tosend = handler.obtainMessage();
-                            tosend.arg1 = -1;
-                            handler.sendMessage(tosend);
                         } else {
                             Log.d("testing", "go check ibm");
                         }
@@ -72,7 +76,48 @@ public class loading extends AppCompatActivity {
                     tosend.arg1 = -2;
                     handler.sendMessage(tosend);
                 }
+                String Answer = "";
+                client = new OkHttpClient();
+                String json = "{\"question\":\"Bonjour\"}";
 
+                RequestBody body = RequestBody.create(
+                        MediaType.parse("application/json"), json);
+
+                request = new Request.Builder()
+                        .url(MainActivity.Frensh_URL)
+                        .post(body)
+                        .build();
+
+                Call call = client.newCall(request);
+                Response response = null;
+                try {
+                    data="";
+                    int trynb =0;
+                    while (!data.contains("answer") && trynb < 5) {
+                    response = call.execute();
+                    Log.d("testing","I'm here");
+                    data = response.body().string();
+                    if(data.contains("answer")) {
+
+                        Answer = CategoryAswer.getFR(data.split(":")[1].trim());
+                        Log.d("testing", "Entered");
+                        Log.d("testing", data.split(":")[1].trim());
+                        Log.d("testing", Answer);
+                        tosend = handler.obtainMessage();
+                        tosend.arg1 = -1;
+                        handler.sendMessage(tosend);
+                        }
+                        trynb++;
+                    }
+
+                } catch (IOException e) {
+                    Log.d("testing",e.toString());
+                }
+                if(!data.contains("answer")){
+                    tosend = handler.obtainMessage();
+                    tosend.arg1 = -2;
+                    handler.sendMessage(tosend);
+                }
             }
         });
     }
