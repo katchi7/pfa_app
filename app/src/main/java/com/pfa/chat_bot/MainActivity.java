@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -250,6 +251,9 @@ public class MainActivity extends AppCompatActivity {
                 ang = m.findItem(R.id.English);
                 ang.setChecked(!item.isChecked());
                 return true;
+            case R.id.About:
+                Intent i = new Intent(MainActivity.this,AboutActivity.class);
+                MainActivity.this.startActivityForResult(i,0);
 
         }
         return false;

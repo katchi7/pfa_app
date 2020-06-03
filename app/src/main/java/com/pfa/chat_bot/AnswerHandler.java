@@ -1,6 +1,9 @@
 package com.pfa.chat_bot;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +36,7 @@ public class AnswerHandler extends Handler{
         switch (msg.arg1){
             case-2:
                 Toast.makeText(context,"Failed to connect",Toast.LENGTH_LONG);
-                ((loading)context).finish();
+                ShowDialog();
                 break;
             case -1:
                 Intent i = new Intent(context,MainActivity.class);
@@ -60,5 +63,25 @@ public class AnswerHandler extends Handler{
         else messages.get(position).setMessage(Answer);
         Adapter.notifyDataSetChanged();
         view.smoothScrollToPosition(messages.size()-1);
+    }
+    public void ShowDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Connexion Erorr");
+        builder.setMessage("We found some essues to connect, check your network state");
+// Add the buttons
+        builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent i = new Intent(context,loading.class);
+                context.startActivity(i);
+                ((Activity)context).finish();
+            }
+        });
+        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ((Activity)context).finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

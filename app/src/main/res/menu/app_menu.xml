@@ -9,4 +9,5 @@
             </group>
         </menu>
     </item>
+    <item android:id="@+id/About" android:title="About" />
 </menu>

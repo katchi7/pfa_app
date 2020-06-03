@@ -32,7 +32,6 @@ public class loading extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Load();
-
     }
     public void Load(){
         AsyncTask.execute(new Runnable() {
