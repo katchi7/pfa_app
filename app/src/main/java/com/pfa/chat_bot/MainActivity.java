@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String DARK_MODE = "com.pfa.chat_bot.DarkMode";
     private static final String LANG_PREF = "com.pfa.chat_bot.LANGUAGE";
     public static final String API = "https://bbb7b760.eu-gb.apigw.appdomain.cloud/chatbotapi/chatbotapi/";
-    public static final String Frensh_URL = "https://us-central1-trusty-magnet-279117.cloudfunctions.net/Chatbot";
-    public static final String Frensh_URL2 = "https://us-central1-trusty-magnet-279117.cloudfunctions.net/Chatbot-1";
+    public static final String Frensh_URL = "https://europe-west2-trusty-magnet-279117.cloudfunctions.net/Chatbot";
+    public static final String Frensh_URL2 = "https://europe-west1-trusty-magnet-279117.cloudfunctions.net/Chatbot-2";
     private MessageDao Message_database;
     private static String LANGUAGE ="";
     private SharedPreferences User_Preferences;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         message = new ArrayList<>();
         Adapter = new ConversationAdapter(MainActivity.this, message);
         Messages_lv.setAdapter(Adapter);
-        handler = new AnswerHandler(Messages_lv, Adapter, message);
+        handler = new AnswerHandler(Messages_lv, Adapter, message,MainActivity.this);
         registerForContextMenu(Messages_lv);
         Send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
                     String Answer = "";
                     String data = "";
                     String url = Frensh_URL;
-                    while (!data.contains("answer")) {
+                    int count =0;
+                    while (!data.contains("answer") && count<5) {
 
                         OkHttpClient client = new OkHttpClient();
                         String json = "{\"question\":\"" + question + "\"}";
@@ -194,6 +195,13 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("testing",e.toString());
                             Log.d("testing","URL Changed -> "+url);
                         }
+                        count++;
+                    }
+                    if(!data.contains("answer")){
+                        tosend = handler.obtainMessage();
+                        tosend.arg1 = -2;
+                        handler.sendMessage(tosend);
+
                     }
                 }
 
@@ -286,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
         Save.StartActionSave(MainActivity.this,Message_database,DarkMode,User_Preferences,message,LANG_PREF,LANGUAGE,DARK_MODE);
         Intent i = new Intent(MainActivity.this,Save.class);
         startService(i);
-
     }
 
     @Override

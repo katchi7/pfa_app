@@ -21,10 +21,11 @@ public class AnswerHandler extends Handler{
     ArrayList<com.pfa.chat_bot.Message> messages;
     private Context context;
     int Posision;
-    public AnswerHandler(ListView view, ConversationAdapter Adapter , ArrayList<com.pfa.chat_bot.Message> messages){
+    public AnswerHandler(ListView view, ConversationAdapter Adapter , ArrayList<com.pfa.chat_bot.Message> messages,Context context){
         this.view = view;
         this.Adapter = Adapter;
         this.messages = messages;
+        this.context = context;
     }
     public AnswerHandler(Context context){
         this.context = context;
@@ -35,7 +36,9 @@ public class AnswerHandler extends Handler{
         String Answer;
         switch (msg.arg1){
             case-2:
-                Toast.makeText(context,"Failed to connect",Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context,"FAILED TO CONNECT",Toast.LENGTH_LONG);
+                toast.setGravity(0,0,700);
+                toast.show();
                 ShowDialog();
                 break;
             case -1:
