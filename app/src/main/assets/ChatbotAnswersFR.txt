@@ -109,21 +109,7 @@ Les symptômes d'un orteil cassé comprennent: douleur, enflure, ecchymose et di
 • Si vous ressentez une douleur intense, ne pouvez pas marcher, l’orteil semble plié ou déformé, ou la douleur dure longtemps, consultez un médecin.
 3. Suivi
 Restez hors de votre pied et évitez les activités qui causent de la douleur pendant 3-4 semaines.
-Portez une chaussure solide avec une semelle rigide pour protéger l'orteil blessé et le maintenir stable. Évitez les chaussures qui exercent une pression sur l'orteil.
-Traitement des orteils cassés
-Les symptômes d'un orteil cassé comprennent: douleur, enflure, ecchymose et difficulté à marcher.
-1. Empêcher l'enflure et d'autres blessures
-• Restez éloigné du pied autant que possible.
-• Évitez les mouvements ou pressions qui causent de la douleur.
-• Appliquez de la glace jusqu'à 20 minutes à la fois. Enveloppez-le dans une serviette; ne pas appliquer directement sur la peau.
-• Gardez le pied surélevé aussi souvent que possible, en particulier les 2 premiers jours après une blessure, pour contrôler la douleur et l'enflure.
-• Pour la douleur, prenez de l'acétaminophène (Tylenol) ou de l'ibuprofène (Advil, Motrin).
-2. Obtenez de l'aide
-• Si vous ressentez une douleur intense, ne pouvez pas marcher, l’orteil semble plié ou déformé, ou la douleur dure longtemps, consultez un médecin.
-3. Suivi
-Restez hors de votre pied et évitez les activités qui causent de la douleur pendant 3-4 semaines.
-Portez une chaussure solide avec une semelle rigide pour protéger l'orteil blessé et le maintenir stable. Évitez les chaussures qui exercent une pression sur l'orteil /
-
+Portez une chaussure solide avec une semelle rigide pour protéger l'orteil blessé et le maintenir stable. Évitez les chaussures qui exercent une pression sur l'orteil./
 bruises#
 Traiter une ecchymose à la maison
 1. Réduisez les ecchymoses et les gonflements
@@ -415,7 +401,7 @@ Consultez immédiatement un fournisseur de soins de santé si:
 
 muscle-strain#
 
-Traiter la fatigue musculaire
+Traiter la tension musculaire
 1. Contrôlez le gonflement et évitez de nouvelles blessures avec le PRGCE
 -Protéger en appliquant un bandage élastique, une écharpe ou une attelle.
 -Reposer le muscle pendant au moins une journée.
@@ -436,7 +422,7 @@ Appelez un fournisseur de soins de santé si:
 
 sprains-strains #
 
-Traitement pour entorses-foulure
+Traitement pour entorses foulure
 1. Contrôle de l'enflure avec la thérapie RGCE
 	-Restez la zone foulée ou tendue. Si nécessaire, utilisez une écharpe pour une blessure au bras ou des béquilles pour une blessure à la jambe ou au pied. Attelle un doigt ou un orteil blessé en le collant sur un doigt ou un orteil adjacent.
 	-Glace pendant 20 minutes toutes les heures.

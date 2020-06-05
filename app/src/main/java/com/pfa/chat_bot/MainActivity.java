@@ -283,16 +283,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Message_database.DeleteAll();
-        for(int i = 0;i<message.size();i++ ) if(message.get(i).getMessage()!="") Message_database.Insert(message.get(i));
-        message.clear();
-        Message_database.close();
-        SharedPreferences.Editor editor = User_Preferences.edit();
-        editor.putBoolean(DARK_MODE,DarkMode);
-        Log.d("testing",LANGUAGE);
-        editor.putString(LANG_PREF,LANGUAGE);
-        editor.commit();
-        Log.d("testing","done");
+        Save.StartActionSave(MainActivity.this,Message_database,DarkMode,User_Preferences,message,LANG_PREF,LANGUAGE,DARK_MODE);
+        Intent i = new Intent(MainActivity.this,Save.class);
+        startService(i);
 
     }
 

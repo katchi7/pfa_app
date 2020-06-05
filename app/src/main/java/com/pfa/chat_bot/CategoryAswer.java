@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryAswer  {
-    private Context context;
     private static Map<String, String> questionAnswer = new HashMap<>();
     private static Map<String, String> questionAnswerFR = new HashMap<>();
     private static CategoryAswer categoryAswer;
@@ -36,14 +35,11 @@ public class CategoryAswer  {
 
         if (temp != null) {
             Answers = temp.split("/");
-            String collect = "";
             for (String S : Answers) {
 
                 String[] contets = S.split("#");
-                collect += contets[0].trim()+"\n";
                 questionAnswer.put(contets[0].trim(), contets[1]);
             }
-            Log.d("collect",collect);
         }
         temp = "";
         try {
