@@ -1,16 +1,11 @@
 <resources>
-    <string name="app_name">The ChatBot</string>
+    <string name="app_name">Doc. Bot</string>
     <string name="title_activity_about">About The app</string>
     <string name="large_text">
-        "ENSIAS emergency Chatbot.\n\n"
+        "Doc. Bot \n\n"
 
-        "This app is created by ENSIAS students, it contains two text classification models:\n"
+        "This app is created by ENSIAS students:\n"
         "\n\n"
-        "The first model is used to classify English questions , built using Apache Opennlp in Java"
-        "and hosted on ibm cloud functions.\n"
-        "\n"
-        "The second is used to classify french questions and built using tensorflow and python,"
-        "and hosted on google cloud\n\n"
         "This chatbot can give treatments for 20 different emergency cases in both english and"
         " french languages.\n\n"
         "Treated Emergency cases : \n\n"

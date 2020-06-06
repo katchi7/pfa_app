@@ -187,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 else url=Frensh_URL2;
                                 Log.d("testing","URL Changed -> "+url);
-
                             }
                         } catch (IOException e) {
                             if(url.contains(Frensh_URL2)) url=Frensh_URL;
@@ -219,10 +218,10 @@ public class MainActivity extends AppCompatActivity {
         LANGUAGE = User_Preferences.getString(LANG_PREF,"ENG");
         Log.d("testing",LANGUAGE);
         if (DarkMode) {
-            parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode));
+            parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode,null));
 
         }
-        else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode));
+        else parent_ly.setBackgroundColor(getResources().getColor(R.color.DefaultMode,null));
         Message_database = new MessageDao(MainActivity.this);
         Message_database.open();
         Cursor c = Message_database.SelectMessages();

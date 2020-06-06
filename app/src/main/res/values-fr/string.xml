@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Le ChatBot</string>
-    <string name="title_activity_about">A propo de l\'application</string>
+    <string name="app_name">Doc. Bot</string>
+    <string name="title_activity_about">A propo de l\'app</string>
+
     <string name="large_text">
-     "Chatbot d'urgence ENSIAS. \n \n"
-     "Cette application est créée par des étudiants ENSIAS, elle contient deux modèles de classification de texte: \n"
+     "Doc. Bot est un chatbot de soins d'urgence. Ce chatbot peut donner des traitements pour 20 cas d'urgence différents en anglais et français."
      "\n \n"
-     "Le premier modèle est utilisé pour classer les questions en anglais, construit en utilisant Apache Opennlp en Java"
-     "et hébergé sur les fonctions cloud ibm. \n"
-     "\n"
-     "Le second est utilisé pour classer les questions en français et construit en utilisant tensorflow et python,"
-     "et hébergé sur google cloud \n \n"
-     "Ce chatbot peut donner des traitements pour 20 cas d'urgence différents en anglais et"
-     "langues françaises. \n \n"
      "Cas d'urgence traités: \n \n"
      "1- douleur abdominale \n"
      "2 morsures d'animaux \n"

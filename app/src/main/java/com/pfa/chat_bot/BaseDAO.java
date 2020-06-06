@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public abstract class BaseDAO {
 
-    protected final static int VERSION = 1;
+    protected final static int VERSION = 2;
     protected final static String NOM = "chatbot.db";
 
     protected SQLiteDatabase mDb = null;

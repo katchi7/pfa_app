@@ -41,41 +41,8 @@ public class Load extends IntentService {
                 CategoryAswer.loadAnswers(context);
                 String data = "";
                 android.os.Message tosend;
-                OkHttpClient client = new OkHttpClient();
-
-                Request request = new Request.Builder()
-                        .url(MainActivity.API + "hey".replace(" ","%20"))
-                        .get()
-                        .addHeader("accept", "application/json")
-                        .build();
-
-                try {
-
-                    int trynb =0;
-                    while (!data.contains("answer") && trynb < 5) {
-                        Response response = client.newCall(request).execute();
-                        data = response.body().string();
-                        Log.d("testing", data);
-                        if (data.contains("answer")) {
-                            JsonParser parser = new JsonParser();
-                            JsonObject obj = parser.parse(data).getAsJsonObject();
-
-                            String Categorie = obj.getAsJsonPrimitive("answer").getAsString();
-                        } else {
-                            Log.d("testing", "go check ibm");
-                        }
-                        trynb++;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.d("testing",e.toString());
-                    data = "";
-                }
-                if(!data.contains("answer")){
-                    tosend = handler.obtainMessage();
-                    tosend.arg1 = -2;
-                    handler.sendMessage(tosend);
-                }
+                OkHttpClient client ;
+                Request request ;
                 String Answer = "";
                 client = new OkHttpClient();
                 String json = "{\"question\":\"Bonjour\"}";
