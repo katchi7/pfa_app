@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,7 +55,6 @@ public class AnswerHandler extends Handler{
                 Answer = (String) msg.obj;
                 Posision = msg.arg2;
                 UpdateItem(Posision, Answer);
-                Log.d("testing",Answer);
                 break;
 
         }

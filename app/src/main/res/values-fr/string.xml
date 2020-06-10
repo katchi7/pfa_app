@@ -26,8 +26,14 @@
      "17- hypothermie \n"
      "18- saignements de nez \n"
      "19- tension musculaire \n"
-     "20- foulures foulures \n"
+     "20- entroses foulures \n"
     </string>
     <string name="action_settings">Paramètres</string>
     <string name="typing">Ecrit...</string>
+    <string name="Enter">Texto</string>
+    <string name="Activate_Dark_Mode">Activer le mode sombre</string>
+    <string name="Language">Langue</string>
+    <string name="English">Anglais</string>
+    <string name="French">Français</string>
+    <string name="About">A propo</string>
 </resources>

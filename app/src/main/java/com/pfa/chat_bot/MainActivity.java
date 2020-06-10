@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Response response = client.newCall(request).execute();
                         String data = response.body().string();
-                        Log.d("testing", data);
                         if (data.contains("answer")) {
                             JsonParser parser = new JsonParser();
                             JsonObject obj = parser.parse(data).getAsJsonObject();
@@ -134,11 +132,9 @@ public class MainActivity extends AppCompatActivity {
                             handler.sendMessage(tosend);
 
                         } else {
-                            Log.d("testing", "go check ibm");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.d("testing", e.toString());
                     }
                 }
                 else {
@@ -169,9 +165,6 @@ public class MainActivity extends AppCompatActivity {
                             if (data.contains("answer")) {
 
                                 Answer = CategoryAswer.getFR(data.split(":")[1].trim());
-                                Log.d("testing", "Entered");
-                                Log.d("testing", data.split(":")[1].trim());
-                                Log.d("testing", Answer);
                                 tosend = handler.obtainMessage();
                                 tosend.obj = Answer;
                                 tosend.arg1 = 1;
@@ -183,16 +176,12 @@ public class MainActivity extends AppCompatActivity {
                             else{
                                 if(url.contains(Frensh_URL2)){
                                     url=Frensh_URL;
-                                    Log.d("testing","Changed");
                                 }
                                 else url=Frensh_URL2;
-                                Log.d("testing","URL Changed -> "+url);
                             }
                         } catch (IOException e) {
                             if(url.contains(Frensh_URL2)) url=Frensh_URL;
                             else url=Frensh_URL2;
-                            Log.d("testing",e.toString());
-                            Log.d("testing","URL Changed -> "+url);
                         }
                         count++;
                     }
@@ -216,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         User_Preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         DarkMode = User_Preferences.getBoolean(DARK_MODE,false);
         LANGUAGE = User_Preferences.getString(LANG_PREF,"ENG");
-        Log.d("testing",LANGUAGE);
         if (DarkMode) {
             parent_ly.setBackgroundColor(getResources().getColor(R.color.DarkMode,null));
 
@@ -231,7 +219,6 @@ public class MainActivity extends AppCompatActivity {
            size++;
         }
         Adapter.notifyDataSetChanged();
-        Log.d("testing",Integer.toString(Adapter.getCount()-1));
         Messages_lv.setSelection(Adapter.getCount()-1);
     }
 
@@ -240,10 +227,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.app_menu, menu);
         m=menu;
-        Log.d("testing",LANGUAGE);
+
         if(LANGUAGE.contains("ENG")){
             m.findItem(R.id.English).setChecked(true);
-            Log.d("testing","Entered");
         }
         else m.findItem(R.id.french).setChecked(true);
         return true;

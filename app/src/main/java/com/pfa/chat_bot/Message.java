@@ -1,7 +1,5 @@
 package com.pfa.chat_bot;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class Message {
     private String Message;

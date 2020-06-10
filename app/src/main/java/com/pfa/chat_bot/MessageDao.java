@@ -3,7 +3,7 @@ package com.pfa.chat_bot;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
+
 
 public class MessageDao extends BaseDAO{
     private static final String ID = "Id";

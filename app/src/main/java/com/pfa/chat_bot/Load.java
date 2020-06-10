@@ -4,11 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -62,29 +57,23 @@ public class Load extends IntentService {
                     Response response = null;
                     try {
                         response = call.execute();
-                        Log.d("testing", "I'm here");
                         data = response.body().string();
                         if (data.contains("answer")) {
 
                             Answer = CategoryAswer.getFR(data.split(":")[1].trim());
-                            Log.d("testing", "Entered");
-                            Log.d("testing", data.split(":")[1].trim());
-                            Log.d("testing", Answer);
                             tosend = handler.obtainMessage();
                             tosend.arg1 = -1;
                             handler.sendMessage(tosend);
                         } else {
                             if (url.contains(MainActivity.Frensh_URL2)) url = MainActivity.Frensh_URL;
                             else url = MainActivity.Frensh_URL2;
-                            Log.d("testing", "URL Changed -> " + url);
                         }
 
 
                     } catch (IOException e) {
-                        Log.d("testing", e.toString());
                         if (url.contains(MainActivity.Frensh_URL2)) url = MainActivity.Frensh_URL;
                         else url = MainActivity.Frensh_URL2;
-                        Log.d("testing", "URL Changed -> " + url);
+
                     }
                     trynb++;
                 }

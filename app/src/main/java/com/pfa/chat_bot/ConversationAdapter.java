@@ -1,7 +1,6 @@
 package com.pfa.chat_bot;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,9 +126,7 @@ public class ConversationAdapter extends BaseAdapter implements View.OnClickList
         return convertView;
     }
     public void onClick(View v) {
-        Log.d("testing","Clicked");
         TextView textView = (TextView) v;
-        Log.d("testing",token_Question.get(textView.getText().toString().trim()));
         String Answer = CategoryAswer.get(token_Question.get(textView.getText().toString().trim()));
         Messages.add(new Message("YourChatbot",Answer,false));
         this.notifyDataSetChanged();

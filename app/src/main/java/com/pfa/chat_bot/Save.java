@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -40,10 +39,8 @@ public class Save extends IntentService {
             Messeges_DB.close();
             SharedPreferences.Editor editor = User_Preferences.edit();
             editor.putBoolean(DARK_MODE,DarkMode);
-            Log.d("testing",LANGUAGE);
             editor.putString(LANG_PREF,LANGUAGE);
             editor.commit();
-            Log.d("testing","done");
 
         }
 
